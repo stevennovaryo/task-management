@@ -16,9 +16,9 @@ Link aplikasi di Heroku : [Link](https://pbp-tugas-2-insta-x.herokuapp.com/katal
 
 ## Manfaat Virtual Environment
 
-Dengan menggunakan virtual environment, kita dapat memisahkan package library yang diperlukan untuk setiap project yang kita miliki.
-Selain itu, setiap project dapat menggunakan library yang sama dengan versi berbeda tanpa menghasilkan konflik.
-Contohnya, project A menggunakan python 2 sedangkan project B menggunakan python 3. Jika tidak menggunakan virtual environment, maka
+Dengan menggunakan virtual environment, kita dapat memisahkan package library yang diperlukan untuk setiap projek yang kita miliki.
+Selain itu, setiap projek dapat menggunakan library yang sama dengan versi berbeda tanpa menghasilkan konflik.
+Contohnya, projek A menggunakan python 2 sedangkan projek B menggunakan python 3. Jika tidak menggunakan virtual environment, maka
 umumnya kita hanya bisa mengakses salah satu dari kedua versi python tersebut dalam waktu yang sama sehingga setiap kali kita ingin
 mengerjakan projek lain, kita perlu mengatur terlebih dahulu versi python yang digunakan komputer kita. Selain itu, jika kita mengupdate
 library tanpa menggunakan virtual environment, ada kemungkinan projek lain yang menggunakan library yang sama akan menjadi rusak karena
