@@ -7,11 +7,11 @@ Link aplikasi di Heroku : [Link](https://pbp-tugas-2-insta-x.herokuapp.com/katal
 ![Bagan](./Bagan.png?raw=true)
 
 1. User memberikan request ke server Django
-2. urls.py memproses request tersebut dan melakukan routing ke views yang terpilih
-3. views.py yang terpilih memproses request tersebut dan melakukan query ke models.py jika diperlukan
-4. models.py mengambil data dari database sesuai permintaan views.py dan mengembalikan data tersebut ke views.py
-5. views.py memilih template html yang diperlukan dan menggunakan data dari models.py untuk memproses template tersebut
-6. views.py mengirimkan template html yang sudah diproses kembali ke User
+2. `urls.py` memproses request tersebut dan melakukan routing ke views yang terpilih
+3. `views.py` yang terpilih memproses request tersebut dan melakukan query ke `models.py` jika diperlukan
+4. `models.py` mengambil data dari database sesuai permintaan `views.py` dan mengembalikan data tersebut ke `views.py`
+5. `views.py` memilih template html yang diperlukan dan menggunakan data dari `models.py` untuk memproses template tersebut
+6. `views.py` mengirimkan template html yang sudah diproses kembali ke User
 7. User menampilkan template html tersebut di web browser
 
 ## Manfaat Virtual Environment
@@ -32,9 +32,9 @@ menggunakan virtual environment.
 
 ## Penjelasan langkah
 
-1. Membuat fungsi yang memberikan template html pada views.py
-2. Memasukkan routing ke views.py di dalam urls.py folder katalog dan folder project_django menggunakan variable urlpatterns
-3. Melakukan migration dan loaddata dari initial_catalog_data.json untuk memasukkan data ke local database. Kemudian
-mengambil semua objects yang ada di database untuk dimasukkan sebagai context ke template html oleh views.py
+1. Membuat fungsi yang memberikan template html pada `views.py`
+2. Memasukkan routing ke `views.py` di dalam `urls.py` folder katalog dan folder project_django menggunakan variable `urlpatterns`
+3. Melakukan `migration` dan `loaddata` dari `initial_catalog_data.json` untuk memasukkan data ke local database. Kemudian
+mengambil semua objects yang ada di database untuk dimasukkan sebagai context ke template html oleh `views.py`
 4. Karena workflows, Procfile, dan lain-lain sudah tersetup dari template repo, maka tinggal membuat app baru di Heroku,
-kemudian memasukkan HEROKU_API_KEY dan HEROKU_APP_NAME ke repository secret 
+kemudian memasukkan `HEROKU_API_KEY` dan `HEROKU_APP_NAME` ke repository secret 
