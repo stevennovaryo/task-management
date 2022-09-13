@@ -29,3 +29,12 @@ lain sehingga tidak ada kemungkinan konflik pada projek lain.
 Bisa saja membuat aplikasi web berbasis Django tanpa menggunakan virtual environment. Namun, seperti yang sudah ditulis di atas,
 banyak sekali kerumitan yang muncul jika terdapat projek lain yang menggunakan library yang sama sehingga jauh lebih baik untuk
 menggunakan virtual environment.
+
+## Penjelasan langkah
+
+1. Membuat fungsi yang memberikan template html pada views.py
+2. Memasukkan routing ke views.py di dalam urls.py folder katalog dan folder project_django menggunakan variable urlpatterns
+3. Melakukan migration dan loaddata dari initial_catalog_data.json untuk memasukkan data ke local database. Kemudian
+mengambil semua objects yang ada di database untuk dimasukkan sebagai context ke template html oleh views.py
+4. Karena workflows, Procfile, dan lain-lain sudah tersetup dari template repo, maka tinggal membuat app baru di Heroku,
+kemudian memasukkan HEROKU_API_KEY dan HEROKU_APP_NAME ke repository secret 
