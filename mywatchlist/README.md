@@ -35,3 +35,8 @@ Atribut yang dimasukkan:
 - `review` dengan data type `models.TextField()`
 
 Setelah class dibuat, kita melakukan perintah `python manage.py makemigrations` dan `python manage.py migrate` untuk memasukkan class model yang baru kita buat ke database.
+
+## Postman Screenshot
+![HTML](./HTML.png?raw=true)
+![XML](./XML.png?raw=true)
+![JSON](./JSON.png?raw=true)
