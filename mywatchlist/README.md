@@ -25,10 +25,13 @@ Untuk membuat sebuah aplikasi django baru, kita menggunakan perintah `python man
 Untuk menambahkan path agar aplikasi `mywatchlist` dapat diakses di `http://localhost:8000/mywatchlist`, pertama kita menambahkan path ke `mywatchlist.urls` dengan menambahkan `path('mywatchlist/', include('mywatchlist.urls'))` kedalam variable `urlpatterns` di file `project_django/urls.py`. Kemudian, kita perlu menambahkan path lagi dari `mywatchlist.urls` menuju `mywatchlist.views`. Hal ini dilakukan dengan menambahkan function yang nantinya akan menampilkan webpage ke `mywatchlist/views.py` dan kemudian disambungkan ke `mywatchlist.urls` dengan menambahkan path ke function tersebut ke `mywatchlist/urls.py`.
 
 ### Langkah 3
-Pertama kita membuat class `MyWatchList` di `mywatchlist/models.py`. Kemudian kita mengisi class tersebut dengan atribut-atribut yang kita inginkan untuk class tersebut. Atribut yang dimasukkan:
+Pertama kita membuat class `MyWatchList` di `mywatchlist/models.py`. Kemudian kita mengisi class tersebut dengan atribut-atribut yang kita inginkan untuk class tersebut.
+
+Atribut yang dimasukkan:
 - `watched` dengan data type `models.BooleanField()`
 - `title` dengan data type `models.TextField()`
 - `rating` dengan data type `models.IntegerField()`
 - `release_date` dengan data type `models.DateField()`
 - `review` dengan data type `models.TextField()`
+
 Setelah class dibuat, kita melakukan perintah `python manage.py makemigrations` dan `python manage.py migrate` untuk memasukkan class model yang baru kita buat ke database.
