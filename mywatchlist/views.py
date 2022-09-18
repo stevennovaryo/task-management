@@ -5,10 +5,17 @@ from django.core import serializers
 
 def show_watchlist(request):
     data_watchlist_movies = MyWatchList.objects.all()
+    watched_count, not_watched_count = 0, 0
+    for movie in data_watchlist_movies:
+        if movie.watched:
+            watched_count += 1
+        else:
+            not_watched_count += 1
     context = {
         'movie_list' : data_watchlist_movies,
         'name' : 'Uttsada Jason',
         'npm' : '2106629976',
+        'more_watched' : watched_count >= not_watched_count,
     }
     return render(request, "mywatchlist.html", context)
 
