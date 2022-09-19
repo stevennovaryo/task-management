@@ -14,11 +14,11 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 2,
         "fields": {
-            "watched": true,
-            "title": "Spirited Away",
-            "rating": 5,
-            "release_date": "2001-07-20",
-            "review": "It's a masterpiece!"
+            "watched": false,
+            "title": "One Piece Film: Red",
+            "rating": 4,
+            "release_date": "2022-09-17",
+            "review": "Too much song"
         }
     },
     {
@@ -26,10 +26,10 @@
         "pk": 3,
         "fields": {
             "watched": true,
-            "title": "Spirited Away",
+            "title": "The Matrix",
             "rating": 5,
-            "release_date": "2001-07-20",
-            "review": "It's a masterpiece!"
+            "release_date": "1999-07-03",
+            "review": "One of the best CGI of that time"
         }
     },
     {
@@ -37,10 +37,10 @@
         "pk": 4,
         "fields": {
             "watched": true,
-            "title": "Spirited Away",
-            "rating": 5,
-            "release_date": "2001-07-20",
-            "review": "It's a masterpiece!"
+            "title": "Sonic the Hedgehog 2",
+            "rating": 3,
+            "release_date": "2022-04-08",
+            "review": "It's one of the best video game adaptation"
         }
     },
     {
@@ -48,10 +48,10 @@
         "pk": 5,
         "fields": {
             "watched": true,
-            "title": "Spirited Away",
+            "title": "Top Gun: Maverick",
             "rating": 5,
-            "release_date": "2001-07-20",
-            "review": "It's a masterpiece!"
+            "release_date": "2022-05-27",
+            "review": "Has one of the best dogfighting choreography"
         }
     },
     {
@@ -59,21 +59,21 @@
         "pk": 6,
         "fields": {
             "watched": true,
-            "title": "Spirited Away",
+            "title": "Avengers: Endgame",
             "rating": 5,
-            "release_date": "2001-07-20",
-            "review": "It's a masterpiece!"
+            "release_date": "2019-04-24",
+            "review": "Conclude a decade long saga with a satisfying ending"
         }
     },
     {
         "model": "mywatchlist.mywatchlist",
         "pk": 7,
         "fields": {
-            "watched": true,
-            "title": "Spirited Away",
+            "watched": false,
+            "title": "The Lord of the Rings: The Fellowship of the Ring",
             "rating": 5,
-            "release_date": "2001-07-20",
-            "review": "It's a masterpiece!"
+            "release_date": "2001-12-19",
+            "review": "Has beautiful visuals, ambitious story, great characters, heart and is brooding as well."
         }
     },
     {
@@ -81,10 +81,10 @@
         "pk": 8,
         "fields": {
             "watched": true,
-            "title": "Spirited Away",
-            "rating": 5,
-            "release_date": "2001-07-20",
-            "review": "It's a masterpiece!"
+            "title": "The Hobbit: An Unexpected Journey",
+            "rating": 4,
+            "release_date": "2012-11-28",
+            "review": "Is Unexpectedly Boring."
         }
     },
     {
@@ -92,21 +92,21 @@
         "pk": 9,
         "fields": {
             "watched": true,
-            "title": "Spirited Away",
+            "title": "The SpongeBob SquarePants Movie",
             "rating": 5,
-            "release_date": "2001-07-20",
-            "review": "It's a masterpiece!"
+            "release_date": "2005-04-16",
+            "review": "A great conclusion to one of the best cartoon series of all time"
         }
     },
     {
         "model": "mywatchlist.mywatchlist",
         "pk": 10,
         "fields": {
-            "watched": true,
-            "title": "Spirited Away",
+            "watched": false,
+            "title": "Morbius",
             "rating": 5,
-            "release_date": "2001-07-20",
-            "review": "It's a masterpiece!"
+            "release_date": "2022-03-30",
+            "review": "Truly, one of the movies of all time"
         }
     }
 ]
