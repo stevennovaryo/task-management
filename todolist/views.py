@@ -1,3 +1,5 @@
+from multiprocessing import context
+from sqlite3 import Date
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
@@ -7,10 +9,35 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 import datetime
 from django.urls import reverse
+from .models import Task
+from .forms import TaskForm
 
 @login_required(login_url='/todolist/login/')
 def show_todolist(request):
-    render(request, 'login.html')
+    task_list = Task.objects.filter(user=request.user)
+
+    context = {
+        'username': request.user.username,
+        'task_list': task_list,
+    }
+
+    return render(request, 'todolist.html', context)
+
+@login_required(login_url='/todolist/login/')
+def create_task(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            new_task = form.save(commit=False)
+            new_task.user = request.user
+            new_task.date = datetime.datetime.now()
+            new_task.save()
+            form.save_m2m()
+
+            return HttpResponseRedirect(reverse('todolist:show_todolist'))
+    else:
+        form = TaskForm()
+    return render(request, 'create_task.html', {'form': form})
 
 def register(request):
     form = UserCreationForm()

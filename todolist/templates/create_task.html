@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>New Task</title>
+{% endblock meta %}
+
+{% block content %}  
+
+<div class = "login">
+    
+    <h1>Formulir Registrasi</h1>  
+
+        <form method="POST" >  
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table> 
+            <input type="submit" name="submit" value="Create"/>
+        </form>
+
+</div>
+
+{% endblock content %}

@@ -10,5 +10,5 @@ class Task(models.Model):
         null=True,
     )
     date = models.DateField()
-    title = models.TextField()
+    title = models.CharField(max_length=128)
     description = models.TextField()
