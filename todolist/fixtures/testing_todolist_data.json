@@ -9,5 +9,71 @@
             "description": "FLAG{4ut0ma7i0n_1s_k3y}",
             "is_finished": true
         }
+    },
+    {
+        "model": "todolist.task",
+        "pk": 1,
+        "fields": {
+            "user": null,
+            "date": "2022-09-27",
+            "title": "task 1",
+            "description": "testing doang",
+            "is_finished": true
+        }
+    },
+    {
+        "model": "todolist.task",
+        "pk": 2,
+        "fields": {
+            "user": null,
+            "date": "2022-09-27",
+            "title": "task 2",
+            "description": "testing doang",
+            "is_finished": true
+        }
+    },
+    {
+        "model": "todolist.task",
+        "pk": 3,
+        "fields": {
+            "user": null,
+            "date": "2022-09-27",
+            "title": "task 3",
+            "description": "testing doang",
+            "is_finished": true
+        }
+    },
+    {
+        "model": "todolist.task",
+        "pk": 4,
+        "fields": {
+            "user": null,
+            "date": "2022-09-27",
+            "title": "task 4",
+            "description": "testing doang",
+            "is_finished": true
+        }
+    },
+    {
+        "model": "todolist.task",
+        "pk": 5,
+        "fields": {
+            "user": null,
+            "date": "2022-09-27",
+            "title": "task 5",
+            "description": "testing doang",
+            "is_finished": true
+        }
+    },
+    {
+        "model": "todolist.task",
+        "pk": 199,
+        "fields": {
+            "user": null,
+            "date": "2022-09-27",
+            "title": "task high pk 199",
+            "description": "testing experiment doang",
+            "is_finished": true
+        }
     }
 ]
