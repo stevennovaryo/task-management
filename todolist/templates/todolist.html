@@ -17,6 +17,7 @@
     <th>Finished</th>
     <th></th>
     <th></th>
+    <th></th>
 </tr>
 {% for task in task_list %}
 <tr>
@@ -30,6 +31,7 @@
         <th><button><a href="{% url 'todolist:finish_task' task.pk %}">Change task finished status</a></button></th>
     {% endif %}
     <th><button><a href="{% url 'todolist:delete_task' task.pk %}">Delete task</a></button></th>
+    <th><button><a href="{% url 'todolist:show_task' task.pk %}">Show task</a></button></th>
 </tr>
 {% endfor %}
 </table>
