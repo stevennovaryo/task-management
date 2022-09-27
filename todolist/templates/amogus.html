@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<h1>YOU ARE NOT THE OWNER OF THE TASK</h1>
+
+<img src="{% static 'amogus.gif' %}"><br>
+
+<button><a href="{% url 'todolist:show_todolist' %}">Return</a></button>
+
+{% endblock content %}

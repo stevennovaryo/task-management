@@ -46,7 +46,7 @@ def finish_task(request, task_id):
         task.is_finished = True
         task.save()
     else:
-        print("WADUH")
+        return redirect(reverse('todolist:amogus'))
 
     return redirect(reverse('todolist:show_todolist'))
 
@@ -58,18 +58,18 @@ def unfinish_task(request, task_id):
         task.is_finished = False
         task.save()
     else:
-        print("WADUH")
+        return redirect(reverse('todolist:amogus'))
 
     return redirect(reverse('todolist:show_todolist'))
 
 @login_required(login_url='/todolist/login/')
 def delete_task(request, task_id):
     task = Task.objects.get(pk=task_id)
-    
+
     if task.user == request.user:
         task.delete()
     else:
-        print("WADUH")
+        return redirect(reverse('todolist:amogus'))
 
     return redirect(reverse('todolist:show_todolist'))
 
@@ -106,6 +106,9 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('todolist:login'))
     response.delete_cookie('last_login')
     return redirect('todolist:login')
+
+def amogus(request):
+    return render(request, 'amogus.html')
 
 def test(request, message):
     print(message)
