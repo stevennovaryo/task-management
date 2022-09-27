@@ -33,7 +33,6 @@ def create_task(request):
             new_task.date = datetime.datetime.now()
             new_task.save()
             form.save_m2m()
-
             return HttpResponseRedirect(reverse('todolist:show_todolist'))
     else:
         form = TaskForm()
@@ -42,15 +41,36 @@ def create_task(request):
 @login_required(login_url='/todolist/login/')
 def finish_task(request, task_id):
     task = Task.objects.get(pk=task_id)
-    task.is_finished = True
-    task.save()
+
+    if task.user == request.user:
+        task.is_finished = True
+        task.save()
+    else:
+        print("WADUH")
+
     return redirect(reverse('todolist:show_todolist'))
 
 @login_required(login_url='/todolist/login/')
 def unfinish_task(request, task_id):
     task = Task.objects.get(pk=task_id)
-    task.is_finished = False
-    task.save()
+
+    if task.user == request.user:
+        task.is_finished = False
+        task.save()
+    else:
+        print("WADUH")
+
+    return redirect(reverse('todolist:show_todolist'))
+
+@login_required(login_url='/todolist/login/')
+def delete_task(request, task_id):
+    task = Task.objects.get(pk=task_id)
+    
+    if task.user == request.user:
+        task.delete()
+    else:
+        print("WADUH")
+
     return redirect(reverse('todolist:show_todolist'))
 
 def register(request):
