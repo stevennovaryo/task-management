@@ -73,6 +73,11 @@ def delete_task(request, task_id):
 
     return redirect(reverse('todolist:show_todolist'))
 
+def show_task(request, task_id):
+    task = Task.objects.get(pk=task_id)
+
+    return render(request, 'show_task.html', context={'task':task})
+
 def register(request):
     form = UserCreationForm()
 

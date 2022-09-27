@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Title</h3>
+<p>{{task.title}}</p>
+
+<h5>Date</h5>
+<p>{{task.date}}</p>
+
+<h5>Description</h5>
+<p>{{task.description}}</p>
+
+<button><a href="{% url 'todolist:show_todolist' %}">Return</a></button>
+
+{% endblock content %}
