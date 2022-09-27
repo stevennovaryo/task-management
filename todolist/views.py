@@ -39,6 +39,20 @@ def create_task(request):
         form = TaskForm()
     return render(request, 'create_task.html', {'form': form})
 
+@login_required(login_url='/todolist/login/')
+def finish_task(request, task_id):
+    task = Task.objects.get(pk=task_id)
+    task.is_finished = True
+    task.save()
+    return redirect(reverse('todolist:show_todolist'))
+
+@login_required(login_url='/todolist/login/')
+def unfinish_task(request, task_id):
+    task = Task.objects.get(pk=task_id)
+    task.is_finished = False
+    task.save()
+    return redirect(reverse('todolist:show_todolist'))
+
 def register(request):
     form = UserCreationForm()
 
@@ -72,3 +86,7 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('todolist:login'))
     response.delete_cookie('last_login')
     return redirect('todolist:login')
+
+def test(request, message):
+    print(message)
+    return redirect('todolist:show_todolist')
