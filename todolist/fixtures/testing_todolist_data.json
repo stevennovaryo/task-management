@@ -1,0 +1,13 @@
+[
+    {
+        "model": "todolist.task",
+        "pk": 133,
+        "fields": {
+            "user": null,
+            "date": "2022-09-27",
+            "title": "SECRET",
+            "description": "FLAG{4ut0ma7i0n_1s_k3y}",
+            "is_finished": true
+        }
+    }
+]
