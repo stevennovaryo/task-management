@@ -13,6 +13,10 @@
     font-size: 16px;
 }
 
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
 .form-signin .btn {
     width: 100%;
 }
@@ -32,10 +36,33 @@
     font-size: 16px;
 }
 
+.form-register .form-control:focus {
+    z-index: 2;
+}
+
 .form-register .help-text {
     text-align: justify;
 }
 
 .form-register .btn {
     width: 100%;
+}
+
+.form-create-task {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-create-task .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-create-task .form-control:focus {
+    z-index: 2;
 }

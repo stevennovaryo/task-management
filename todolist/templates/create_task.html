@@ -4,18 +4,28 @@
 <title>New Task</title>
 {% endblock meta %}
 
+{% block navbar %}
+<div class="container-fluid">
+    <a class="navbar-brand text-white" href="{% url 'todolist:show_todolist' %}">To Do List</a>
+    <a class="btn btn-danger" href="{% url 'todolist:logout' %}">Logout</a>
+</div>
+{% endblock navbar %}
+
 {% block content %}  
 
-<div class = "login">
+<div class = "create-task container-fluid text-center mt-5">
     
-    <h1>Formulir Registrasi</h1>  
+    <h1>Create a New Task</h1>  
 
-        <form method="POST" >  
+        <form method="POST" class="form-create-task">
             {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table> 
-            <input type="submit" name="submit" value="Create"/>
+            <!-- <label for="id_title">Title:</label> -->
+            <input type="text" name="title" placeholder="Title" maxlength="128" required="" id="id_title" class="form-control">
+
+            <!-- <label for="id_description">Description:</label> -->
+            <textarea name="description" placeholder="Description" cols="40" rows="10" required="" id="id_description" class="form-control"></textarea>
+
+            <input class="btn btn-primary mt-3" style="width: 100%;" type="submit" name="submit" value="Create"/>
         </form>
 
 </div>

@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% block navbar %}
+<div class="container-fluid">
+    <a class="navbar-brand text-white" href="{% url 'todolist:show_todolist' %}">To Do List</a>
+    <a class="btn btn-danger" href="{% url 'todolist:logout' %}">Logout</a>
+</div>
+{% endblock navbar %}
+
 {% block content %}
 
 <h3>Title</h3>
