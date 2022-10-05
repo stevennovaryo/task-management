@@ -27,5 +27,10 @@ External CSS dilakukan dengan memasukkan code CSS pada file yang terpisah dari h
 - `<img>` tag element untuk memasukkan gambar dari suatu source.
 
 ## Jenis CSS Selector
+- `.class` menselect semua element dengan attribut `class="class"`.
+- `.class1 .class2` menselect semua element dengan attribut `class="class2"` yang berada dalam element dengan attribut `class="class1"`.
+- `#id` menselect semua element dengan atribut `id="id"`.
+- `*` menselect semua element.
+- `a:hover` menselect element tag `<a>` yang sedang di-hover mouse.
 
 ## Penjelasan langkah
