@@ -38,3 +38,4 @@ External CSS dilakukan dengan memasukkan code CSS pada file yang terpisah dari h
 - Membuat form manual karena tidak dapat mengubah CSS dari element yang telah digenerate secara otomatis dengan `{{ form.as_table }}`. Kemudian menggunakan bantuan Bootstrap untuk membuat form berada di tengah halaman. Juga menggunakan `style.css` untuk mengatur `max-width` agar tidak terlalu lebar memenuhi 1 halaman.
 - Membuat card dengan menggunakan attribut `class="card"` pada tag `<div>`. Kemudian memformat data dari task agar ditampilkan dengan bagus pada card tersebut.
 - Menggunakan `CTRL + SHIFT + M` untuk mengecek apakah halaman sudah responsive. Jika belum responsive, maka melakukan pengaturan lagi terhadap CSS dan class yang digunakan dari Bootstrap agar responsive.
+- Menambahkan efek hover dengan menggunakan selector CSS `:hover` untuk menselect suatu element yang sedang di-hover mouse.
