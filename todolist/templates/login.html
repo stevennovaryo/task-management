@@ -7,6 +7,10 @@
 {% block navbar %}
 <div class="container-fluid">
     <a class="navbar-brand text-white" href="#">To Do List</a>
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-outline-primary m-1" href="{% url 'todolist:login' %}">Login</a>
+        <a class="btn btn-outline-primary m-1" href="{% url 'todolist:register' %}">Register</a>
+    </div>
 </div>
 {% endblock navbar %}
 
