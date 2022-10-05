@@ -10,54 +10,26 @@
 {% block content %}
 
 <div class="todolist m-3 p-5">
-    <!-- <h5>Username</h5>
-    <p>{{username}}</p> -->
 
-    <a class="btn btn-success" href="{% url 'todolist:create_task' %}">Create a new task</a>
+    <h1>Welcome, {{username}}</h1>
 
-    <!-- <table>
-    <tr>
-        <th>Date</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Finished</th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-    {% for task in task_list %}
-    <tr>
-        <th>{{task.date}}</th>
-        <th>{{task.title}}</th>
-        <th>{{task.description}}</th>
-        <th>{{task.is_finished}}</th>
-        {% if task.is_finished %}
-            <th><button><a href="{% url 'todolist:unfinish_task' task.pk %}">Change task finished status</a></button></th>
-            {% else %}
-            <th><button><a href="{% url 'todolist:finish_task' task.pk %}">Change task finished status</a></button></th>
-        {% endif %}
-        <th><button><a href="{% url 'todolist:delete_task' task.pk %}">Delete task</a></button></th>
-        <th><button><a href="{% url 'todolist:show_task' task.pk %}">Show task</a></button></th>
-    </tr>
-    {% endfor %}
-    </table> -->
+    <a class="btn btn-success mt-2 mb-2" href="{% url 'todolist:create_task' %}">Create a new task</a>
+
     <div class="todolist-card-list">
         {% for task in task_list %}
             <div class="card {% if task.is_finished %} border-success {% else %} border-danger {% endif %} mt-2 mb-2">
                 <div class="card-body">
                     
-                    <div class="container-fluid m-0 p-0">
-                        <div class="row justify-content-between">
-                            <h4 class="col-4 card-title">
-                                {{task.title}}
-                            </h4>
-                            {% if task.is_finished %}
-                                    <span class="col-2 badge rounded-pill bg-success" style="font-size: 18px;">Finished</span>
-                                {% else %}
-                                    <span class="col-2 badge rounded-pill bg-danger" style="font-size: 18px;">Not Finished</span>
-                            {% endif %}
-                        </div>
-                    </div>
+                    <h4 class="card-title">
+                        {{task.title}}
+                        {% if task.is_finished %}
+                                <span class="badge rounded-pill bg-success">Finished</span>
+                            {% else %}
+                                <span class="badge rounded-pill bg-danger">Not Finished</span>
+                        {% endif %}
+                    </h4>
+
+                    <h6 class="card-subtitle mb-2 text-muted">Created on: {{task.date}}</h6>
                         
                     <p class="card-text">{{task.description}}</p>
 
@@ -69,9 +41,6 @@
                     {% endif %}
                     <a class="btn btn-danger" href="{% url 'todolist:delete_task' task.pk %}">Delete task</a>
                 </div>
-                <!-- <div class="card-footer">
-                    
-                </div> -->
             </div>
         {% endfor %}
     </div>
