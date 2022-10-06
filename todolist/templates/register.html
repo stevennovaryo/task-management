@@ -38,6 +38,19 @@
             <input type="password" name="password2" placeholder="Confirm Password" autocomplete="new-password" required="" id="id_password2" class="form-control">
             <div class="form-text help-text">Enter the same password as before, for verification.</div>
 
+            <ul>
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li><div class="form-text help-text text-red">{{ error|escape }}</div></li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li><div class="form-text help-text text-red">{{ error|escape }}</div></li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+
             <input type="submit" name="submit" value="Register" class="btn btn-primary mt-3"/> 
         </form>
 

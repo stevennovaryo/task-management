@@ -28,13 +28,15 @@
         <input class="btn btn-primary mt-3" type="submit" value="Login">
     </form>
 
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
+    <div style="margin: 0 auto; max-width: 330px; width: 100%; padding: 0 15px;">
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
         
     Belum mempunyai akun? <a href="{% url 'todolist:register' %}">Buat Akun</a>
 
