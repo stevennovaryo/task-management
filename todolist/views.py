@@ -39,6 +39,26 @@ def create_task(request):
     return render(request, 'create_task.html', {'form': form})
 
 @login_required(login_url='/todolist/login/')
+def add_task(request):
+    if request.method != 'POST':
+        return redirect('todolist:amogus')
+    
+    form = TaskForm(request.POST)
+    if form.is_valid():
+        new_task = form.save(commit=False)
+        new_task.user = request.user
+        new_task.date = datetime.datetime.now()
+        new_task.save()
+        form.save_m2m()
+        return JsonResponse({
+            'pk' : new_task.pk,
+            'date' : new_task.date,
+            'title' : new_task.title,
+            'description' : new_task.description,
+            'is_finished' : new_task.is_finished
+        })
+
+@login_required(login_url='/todolist/login/')
 def finish_task(request, task_id):
     task = Task.objects.get(pk=task_id)
 
