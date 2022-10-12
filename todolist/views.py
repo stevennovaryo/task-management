@@ -1,7 +1,7 @@
 from multiprocessing import context
 from sqlite3 import Date
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -77,6 +77,11 @@ def show_task(request, task_id):
     task = Task.objects.get(pk=task_id)
 
     return render(request, 'show_task.html', context={'task':task})
+
+@login_required(login_url='/todolist/login/')
+def get_task_json(request):
+    data = Task.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def register(request):
     form = UserCreationForm()

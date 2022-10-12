@@ -7,43 +7,51 @@
 </div>
 {% endblock navbar %}
 
-{% block content %}
+{% block meta %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        show_tasks();
+    });
 
+    function show_tasks() {
+        $.get("./json", data => {
+            data.forEach(element => {
+                var data = element.fields
+
+                var card_div = $('<div></div>')
+                    .addClass('card todolist-card mt-2 mb-2')
+                    .addClass(data.is_finished ? 'border-success' : 'border-danger');
+
+                var card_body = $('<div class="card-body"></div>')
+                    .append($('<h4 class="card-title"></h4>')
+                        .append(data.title)
+                        .append($('<span></span>')
+                            .addClass('badge rounded-pill')
+                            .addClass(data.is_finished ? 'bg-success' : 'bg-danger')
+                            .text(data.is_finished ? 'Finished' : 'Not Finished')))
+                    .append($('<h6 class="card-subtitle mb-2 text-muted">Created on: ' + data.date + '</h6>'))
+                    .append($('<p class="card-text">' + data.description + '</p>'))
+                    .append($('<a class="btn btn-secondary" href="../show-task/' + element.pk + '/">Show task</a>'))
+                    .append($('<a class="btn btn-primary">Change status</a>')
+                        .attr('href', (data.is_finished ? '../unfinish-task/' : '../finish-task/') + element.pk + '/'))
+                    .append($('<a class="btn btn-danger" href="../delete-task/' + element.pk + '/">Delete task</a>'));
+                
+                $("#todolist-card-list").append(card_div.append(card_body));
+            });
+        });
+    }
+</script>
+{% endblock meta %}
+
+{% block content %}
 <div class="todolist">
 
     <h1>Welcome, {{username}}</h1>
 
     <a class="btn btn-success mt-2 mb-2" href="{% url 'todolist:create_task' %}">Create a new task</a>
 
-    <div class="todolist-card-list">
-        {% for task in task_list %}
-            <div class="card todolist-card {% if task.is_finished %} border-success {% else %} border-danger {% endif %} mt-2 mb-2">
-                <div class="card-body">
-                    
-                    <h4 class="card-title">
-                        {{task.title}}
-                        {% if task.is_finished %}
-                                <span class="badge rounded-pill bg-success">Finished</span>
-                            {% else %}
-                                <span class="badge rounded-pill bg-danger">Not Finished</span>
-                        {% endif %}
-                    </h4>
-
-                    <h6 class="card-subtitle mb-2 text-muted">Created on: {{task.date}}</h6>
-                        
-                    <p class="card-text">{{task.description}}</p>
-
-                    <a class="btn btn-secondary" href="{% url 'todolist:show_task' task.pk %}">Show task</a>
-                    {% if task.is_finished %}
-                        <a class="btn btn-primary" href="{% url 'todolist:unfinish_task' task.pk %}">Change status</a>
-                        {% else %}
-                        <a class="btn btn-primary" href="{% url 'todolist:finish_task' task.pk %}">Change status</a>
-                    {% endif %}
-                    <a class="btn btn-danger" href="{% url 'todolist:delete_task' task.pk %}">Delete task</a>
-                </div>
-            </div>
-        {% endfor %}
+    <div id="todolist-card-list" class="todolist-card-list">
     </div>
 </div>
-
 {% endblock content %}
