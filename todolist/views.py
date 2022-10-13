@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 import datetime
 from django.urls import reverse
+from urllib3 import HTTPResponse
 from .models import Task
 from .forms import TaskForm
 
@@ -92,6 +93,17 @@ def delete_task(request, task_id):
         return redirect(reverse('todolist:amogus'))
 
     return redirect(reverse('todolist:show_todolist'))
+
+@login_required(login_url='/todolist/login/')
+def delete_task_ajax(request, task_id):
+    task = Task.objects.get(pk=task_id)
+
+    if task.user == request.user:
+        task.delete()
+    else:
+        return redirect(reverse('todolist:amogus'))
+
+    return HttpResponse(serializers.serialize('json', [task, ]), content_type='application/json')
 
 def show_task(request, task_id):
     task = Task.objects.get(pk=task_id)

@@ -24,7 +24,8 @@
                     success: function(data) {
                         var card_div = $('<div></div>')
                             .addClass('card todolist-card mt-2 mb-2')
-                            .addClass(data.is_finished ? 'border-success' : 'border-danger');
+                            .addClass(data.is_finished ? 'border-success' : 'border-danger')
+                            .attr('id', 'task-' + data.pk);
 
                         var card_body = $('<div class="card-body"></div>')
                             .append($('<h4 class="card-title"></h4>')
@@ -38,7 +39,19 @@
                             .append($('<a class="btn btn-secondary" href="./show-task/' + data.pk + '">Show task</a>'))
                             .append($('<a class="btn btn-primary">Change status</a>')
                                 .attr('href', (data.is_finished ? './unfinish-task/' : './finish-task/') + data.pk))
-                            .append($('<a class="btn btn-danger" href="./delete-task/' + data.pk + '">Delete task</a>'));
+                            .append($('<a class="btn btn-danger" href="#">Delete task</a>')
+                                .click(() => {
+                                    $.ajax({
+                                        url: './delete/' + data.pk,
+                                        type: 'delete',
+                                        beforeSend: function(xhr) {
+                                            xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                                        },
+                                        success: () => {
+                                            $('#task-' + data.pk).remove()
+                                        }
+                                    });
+                                }));
                         $("#todolist-card-list").append(card_div.append(card_body));
                     },
                     error: function(){
@@ -57,7 +70,8 @@
 
                 var card_div = $('<div></div>')
                     .addClass('card todolist-card mt-2 mb-2')
-                    .addClass(data.is_finished ? 'border-success' : 'border-danger');
+                    .addClass(data.is_finished ? 'border-success' : 'border-danger')
+                    .attr('id', 'task-' + element.pk);
 
                 var card_body = $('<div class="card-body"></div>')
                     .append($('<h4 class="card-title"></h4>')
@@ -71,11 +85,29 @@
                     .append($('<a class="btn btn-secondary" href="./show-task/' + element.pk + '">Show task</a>'))
                     .append($('<a class="btn btn-primary">Change status</a>')
                         .attr('href', (data.is_finished ? './unfinish-task/' : './finish-task/') + element.pk))
-                    .append($('<a class="btn btn-danger" href="./delete-task/' + element.pk + '">Delete task</a>'));
+                    .append($('<a class="btn btn-danger" href="#">Delete task</a>')
+                        .click(() => {
+                            $.ajax({
+                                url: './delete/' + element.pk,
+                                type: 'delete',
+                                beforeSend: function(xhr) {
+                                    xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                                },
+                                success: () => {
+                                    $('#task-' + element.pk).remove()
+                                }
+                            });
+                        }));
                 
                 $("#todolist-card-list").append(card_div.append(card_body));
             });
         });
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
     }
 </script>
 {% endblock meta %}
