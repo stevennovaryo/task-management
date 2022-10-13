@@ -22,37 +22,9 @@
                     dataType: 'json',
                     data: $("form#modal-form").serialize(),
                     success: function(data) {
-                        var card_div = $('<div></div>')
-                            .addClass('card todolist-card mt-2 mb-2')
-                            .addClass(data.is_finished ? 'border-success' : 'border-danger')
-                            .attr('id', 'task-' + data.pk);
-
-                        var card_body = $('<div class="card-body"></div>')
-                            .append($('<h4 class="card-title"></h4>')
-                                .append(data.title)
-                                .append($('<span></span>')
-                                    .addClass('badge rounded-pill')
-                                    .addClass(data.is_finished ? 'bg-success' : 'bg-danger')
-                                    .text(data.is_finished ? 'Finished' : 'Not Finished')))
-                            .append($('<h6 class="card-subtitle mb-2 text-muted">Created on: ' + data.date + '</h6>'))
-                            .append($('<p class="card-text">' + data.description + '</p>'))
-                            .append($('<a class="btn btn-secondary" href="./show-task/' + data.pk + '">Show task</a>'))
-                            .append($('<a class="btn btn-primary">Change status</a>')
-                                .attr('href', (data.is_finished ? './unfinish-task/' : './finish-task/') + data.pk))
-                            .append($('<a class="btn btn-danger" href="#">Delete task</a>')
-                                .click(() => {
-                                    $.ajax({
-                                        url: './delete/' + data.pk,
-                                        type: 'delete',
-                                        beforeSend: function(xhr) {
-                                            xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
-                                        },
-                                        success: () => {
-                                            $('#task-' + data.pk).remove()
-                                        }
-                                    });
-                                }));
-                        $("#todolist-card-list").append(card_div.append(card_body));
+                        data.forEach(element => {
+                            $("#todolist-card-list").append(createTasKCard(element));
+                        });
                     },
                     error: function(){
                         alert("ERROR");
@@ -66,42 +38,46 @@
     function show_tasks() {
         $.get("./json", data => {
             data.forEach(element => {
-                var data = element.fields
-
-                var card_div = $('<div></div>')
-                    .addClass('card todolist-card mt-2 mb-2')
-                    .addClass(data.is_finished ? 'border-success' : 'border-danger')
-                    .attr('id', 'task-' + element.pk);
-
-                var card_body = $('<div class="card-body"></div>')
-                    .append($('<h4 class="card-title"></h4>')
-                        .append(data.title)
-                        .append($('<span></span>')
-                            .addClass('badge rounded-pill')
-                            .addClass(data.is_finished ? 'bg-success' : 'bg-danger')
-                            .text(data.is_finished ? 'Finished' : 'Not Finished')))
-                    .append($('<h6 class="card-subtitle mb-2 text-muted">Created on: ' + data.date + '</h6>'))
-                    .append($('<p class="card-text">' + data.description + '</p>'))
-                    .append($('<a class="btn btn-secondary" href="./show-task/' + element.pk + '">Show task</a>'))
-                    .append($('<a class="btn btn-primary">Change status</a>')
-                        .attr('href', (data.is_finished ? './unfinish-task/' : './finish-task/') + element.pk))
-                    .append($('<a class="btn btn-danger" href="#">Delete task</a>')
-                        .click(() => {
-                            $.ajax({
-                                url: './delete/' + element.pk,
-                                type: 'delete',
-                                beforeSend: function(xhr) {
-                                    xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
-                                },
-                                success: () => {
-                                    $('#task-' + element.pk).remove()
-                                }
-                            });
-                        }));
-                
-                $("#todolist-card-list").append(card_div.append(card_body));
+                $("#todolist-card-list").append(createTasKCard(element));
             });
         });
+    }
+
+    function createTasKCard(element) {
+        var data = element.fields
+
+        var card_div = $('<div></div>')
+            .addClass('card todolist-card mt-2 mb-2')
+            .addClass(data.is_finished ? 'border-success' : 'border-danger')
+            .attr('id', 'task-' + element.pk);
+
+        var card_body = $('<div class="card-body"></div>')
+            .append($('<h4 class="card-title"></h4>')
+                .append(data.title)
+                .append($('<span></span>')
+                    .addClass('badge rounded-pill')
+                    .addClass(data.is_finished ? 'bg-success' : 'bg-danger')
+                    .text(data.is_finished ? 'Finished' : 'Not Finished')))
+            .append($('<h6 class="card-subtitle mb-2 text-muted">Created on: ' + data.date + '</h6>'))
+            .append($('<p class="card-text">' + data.description + '</p>'))
+            .append($('<a class="btn btn-secondary" href="./show-task/' + element.pk + '">Show task</a>'))
+            .append($('<a class="btn btn-primary">Change status</a>')
+                .attr('href', (data.is_finished ? './unfinish-task/' : './finish-task/') + element.pk))
+            .append($('<a class="btn btn-danger" href="#">Delete task</a>')
+                .click(() => {
+                    $.ajax({
+                        url: './delete/' + element.pk,
+                        type: 'delete',
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                        },
+                        success: () => {
+                            $('#task-' + element.pk).remove()
+                        }
+                    });
+                }));
+        
+        return card_div.append(card_body);
     }
 
     function getCookie(name) {

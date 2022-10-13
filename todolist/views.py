@@ -51,13 +51,7 @@ def add_task(request):
         new_task.date = datetime.datetime.now()
         new_task.save()
         form.save_m2m()
-        return JsonResponse({
-            'pk' : new_task.pk,
-            'date' : new_task.date,
-            'title' : new_task.title,
-            'description' : new_task.description,
-            'is_finished' : new_task.is_finished
-        })
+        return HttpResponse(serializers.serialize('json', [new_task, ]), content_type='application/json')
 
 @login_required(login_url='/todolist/login/')
 def finish_task(request, task_id):
