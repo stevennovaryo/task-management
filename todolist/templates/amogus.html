@@ -2,7 +2,7 @@
 
 {% block navbar %}
 <div class="container-fluid">
-    <a class="navbar-brand text-white" href="{% url 'todolist:show_todolist' %}">To Do List</a>
+    <a class="navbar-brand text-white" href="{% url 'todolist:show_boardlist' %}">Board List</a>
     <a class="btn btn-danger" href="{% url 'todolist:logout' %}">Logout</a>
 </div>
 {% endblock navbar %}
@@ -15,5 +15,5 @@
 
 <img src="{% static 'amogus.gif' %}"><br>
 
-<button><a href="{% url 'todolist:show_todolist' %}">Return</a></button>
+<button><a href="{% url 'todolist:show_boardlist' %}">Return</a></button>
 {% endblock content %}

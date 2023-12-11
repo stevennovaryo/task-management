@@ -10,8 +10,8 @@ from django.contrib import messages
 import datetime
 from django.urls import reverse
 from urllib3 import HTTPResponse
-from .models import Task
-from .forms import TaskForm
+from .models import Task, Board
+from .forms import TaskForm, BoardForm
 
 @login_required(login_url='/todolist/login/')
 def show_todolist(request):
@@ -34,13 +34,13 @@ def create_task(request):
             new_task.date = datetime.datetime.now()
             new_task.save()
             form.save_m2m()
-            return HttpResponseRedirect(reverse('todolist:show_todolist'))
+            return HttpResponseRedirect(reverse('todolist:show_boardlist'))
     else:
         form = TaskForm()
     return render(request, 'create_task.html', {'form': form})
 
 @login_required(login_url='/todolist/login/')
-def add_task(request):
+def add_task(request, board_id):
     if request.method != 'POST':
         return redirect('todolist:amogus')
     
@@ -49,6 +49,8 @@ def add_task(request):
         new_task = form.save(commit=False)
         new_task.user = request.user
         new_task.date = datetime.datetime.now()
+        board = Board.objects.get(id=board_id)
+        new_task.board = board
         new_task.save()
         form.save_m2m()
         return HttpResponse(serializers.serialize('json', [new_task, ]), content_type='application/json')
@@ -63,7 +65,7 @@ def finish_task(request, task_id):
     else:
         return redirect(reverse('todolist:amogus'))
 
-    return redirect(reverse('todolist:show_todolist'))
+    return redirect(reverse('todolist:show_boardlist'))
 
 @login_required(login_url='/todolist/login/')
 def unfinish_task(request, task_id):
@@ -75,7 +77,7 @@ def unfinish_task(request, task_id):
     else:
         return redirect(reverse('todolist:amogus'))
 
-    return redirect(reverse('todolist:show_todolist'))
+    return redirect(reverse('todolist:show_boardlist'))
 
 @login_required(login_url='/todolist/login/')
 def delete_task(request, task_id):
@@ -86,7 +88,7 @@ def delete_task(request, task_id):
     else:
         return redirect(reverse('todolist:amogus'))
 
-    return redirect(reverse('todolist:show_todolist'))
+    return redirect(reverse('todolist:show_boardlist'))
 
 @login_required(login_url='/todolist/login/')
 def delete_task_ajax(request, task_id):
@@ -106,8 +108,60 @@ def show_task(request, task_id):
 
 @login_required(login_url='/todolist/login/')
 def get_task_json(request):
-    data = Task.objects.filter(user=request.user)
+    board_id = request.GET.get('board_id')
+    data = Task.objects.filter(board__id=board_id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+
+# Board
+@login_required(login_url='/todolist/login/')
+def show_boardlist(request):
+    board_list = Board.objects.filter(allowed_users=request.user)
+
+    context = {
+        'username': request.user.username,
+        'board_list': board_list,
+    }
+
+    return render(request, 'boardlist.html', context)
+
+@login_required(login_url='/todolist/login/')
+def add_board(request):
+    if request.method != 'POST':
+        return redirect('todolist:amogus')
+    
+    form = BoardForm(request.POST)
+    if form.is_valid():
+        new_board = form.save(commit=False)
+        new_board.owner = request.user
+        new_board.date = datetime.datetime.now()
+        new_board.save()
+        new_board.allowed_users.add(new_board.owner)
+        form.save_m2m()
+        return HttpResponse(serializers.serialize('json', [new_board, ]), content_type='application/json')
+
+@login_required(login_url='/todolist/login/')
+def get_board_json(request):
+    data = Board.objects.filter(allowed_users=request.user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@login_required(login_url='/todolist/login/')
+def show_board(request, board_id):
+    board = Board.objects.get(pk=board_id)
+
+    #TODO: Check if user allowed to view board
+    # if not board.allowed_users.filter(user=request.user).exists():
+    #     return redirect(reverse('todolist:amogus'))
+
+    task_list = Task.objects.filter(board=board)
+
+    context = {
+        'username': request.user.username,
+        'task_list': task_list,
+        'board': board,
+    }
+
+    return render(request, 'todolist.html', context)
 
 def register(request):
     form = UserCreationForm()
@@ -129,7 +183,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user) # melakukan login terlebih dahulu
-            response = HttpResponseRedirect(reverse("todolist:show_todolist")) # membuat response
+            response = HttpResponseRedirect(reverse("todolist:show_boardlist")) # membuat response
             response.set_cookie('last_login', str(datetime.datetime.now())) # membuat cookie last_login dan menambahkannya ke dalam response
             return response
         else:
@@ -148,4 +202,4 @@ def amogus(request):
 
 def test(request, message):
     print(message)
-    return redirect('todolist:show_todolist')
+    return redirect('todolist:show_boardlist')
