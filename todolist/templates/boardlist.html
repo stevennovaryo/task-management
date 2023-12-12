@@ -23,7 +23,7 @@
                     data: $("form#modal-form").serialize(),
                     success: function(data) {
                         data.forEach(element => {
-                            $("#boardlist-card-list").append(createTasKCard(element));
+                            $("#boardlist-card-list").append(createBoardCard(element));
                         });
                     },
                     error: function(){

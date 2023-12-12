@@ -22,7 +22,7 @@
                     data: $("form#modal-form").serialize() + "&board_id={{board.id}}",
                     success: function(data) {
                         data.forEach(element => {
-                            $("#todolist-card-list").append(createTasKCard(element));
+                            $("#todolist-card-list").append(createTaskCard(element));
                         });
                     },
                     error: function(){
@@ -54,12 +54,12 @@
     function show_tasks() {
         $.get("../json?board_id={{board.id}}", data => {
             data.forEach(element => {
-                $("#todolist-card-list").append(createTasKCard(element));
+                $("#todolist-card-list").append(createTaskCard(element));
             });
         });
     }
 
-    function createTasKCard(element) {
+    function createTaskCard(element) {
         var data = element.fields
 
         var card_div = $('<div></div>')
