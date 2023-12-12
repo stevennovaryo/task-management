@@ -41,9 +41,10 @@
                     type: 'post',
                     data: $("form#modal-form-invite").serialize() + "&board_id={{board.id}}",
                     success: function(data) {
+                        alert(data['success'] ? "User Invited" : "User Not Found");
                     },
                     error: function(){
-                        alert("ERROR");
+                        alert("Error");
                     }
             });
         });

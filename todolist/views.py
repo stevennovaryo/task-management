@@ -179,11 +179,9 @@ def invite_user(request):
             board_id = request.POST.get('board_id')
             board = Board.objects.get(pk=board_id)
             board.allowed_users.add(invited_user)
+            return JsonResponse({'success': True, 'messsage': 'User Invited'})
         except:
-            print('User not found')
-            pass
-        
-    return redirect(reverse('todolist:show_board', kwargs={'board_id': 1}))
+            return JsonResponse({'success': False, 'message': 'User Not Found'})
 
 def register(request):
     form = UserCreationForm()
