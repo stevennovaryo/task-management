@@ -14,7 +14,7 @@ from .models import Task, Board
 from .forms import TaskForm, BoardForm, InviteUserForm
 from django.contrib.auth.models import User
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def show_todolist(request):
     task_list = Task.objects.filter(user=request.user)
 
@@ -25,7 +25,7 @@ def show_todolist(request):
 
     return render(request, 'todolist.html', context)
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def create_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -40,7 +40,7 @@ def create_task(request):
         form = TaskForm()
     return render(request, 'create_task.html', {'form': form})
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def add_task(request, board_id):
     if request.method != 'POST':
         return redirect('todolist:amogus')
@@ -56,7 +56,7 @@ def add_task(request, board_id):
         form.save_m2m()
         return HttpResponse(serializers.serialize('json', [new_task, ]), content_type='application/json')
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def finish_task(request, task_id):
     task = Task.objects.get(pk=task_id)
 
@@ -68,7 +68,7 @@ def finish_task(request, task_id):
     board_id = request.GET.get('board_id')
     return redirect(reverse('todolist:show_board', kwargs={'board_id': board_id}))
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def unfinish_task(request, task_id):
     task = Task.objects.get(pk=task_id)
 
@@ -81,7 +81,7 @@ def unfinish_task(request, task_id):
     board_id = request.GET.get('board_id')
     return redirect(reverse('todolist:show_board', kwargs={'board_id': board_id}))
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def delete_task(request, task_id):
     task = Task.objects.get(pk=task_id)
 
@@ -93,7 +93,7 @@ def delete_task(request, task_id):
     board_id = request.GET.get('board_id')
     return redirect(reverse('todolist:show_board', kwargs={'board_id': board_id}))
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def delete_task_ajax(request, task_id):
     task = Task.objects.get(pk=task_id)
 
@@ -109,7 +109,7 @@ def show_task(request, task_id):
 
     return render(request, 'show_task.html', context={'task':task})
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def get_task_json(request):
     board_id = request.GET.get('board_id')
     data = Task.objects.filter(board__id=board_id)
@@ -117,7 +117,7 @@ def get_task_json(request):
 
 
 # Board
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def show_boardlist(request):
     board_list = Board.objects.filter(allowed_users=request.user)
 
@@ -128,7 +128,7 @@ def show_boardlist(request):
 
     return render(request, 'boardlist.html', context)
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def add_board(request):
     if request.method != 'POST':
         return redirect('todolist:amogus')
@@ -143,12 +143,12 @@ def add_board(request):
         form.save_m2m()
         return HttpResponse(serializers.serialize('json', [new_board, ]), content_type='application/json')
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def get_board_json(request):
     data = Board.objects.filter(allowed_users=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def show_board(request, board_id):
     board = Board.objects.get(pk=board_id)
 
@@ -165,7 +165,7 @@ def show_board(request, board_id):
 
     return render(request, 'todolist.html', context)
 
-@login_required(login_url='/todolist/login/')
+@login_required(login_url='/login/')
 def invite_user(request):
     if request.method != 'POST':
         return redirect('todolist:amogus')
