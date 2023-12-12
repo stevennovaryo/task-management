@@ -18,10 +18,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('example_app.urls')),
+    path('example_app/', include('example_app.urls')),
     path('katalog/', include('katalog.urls')),
     path('mywatchlist/', include('mywatchlist.urls')),
-    path('todolist/', include('todolist.urls'))
+    path('', include('todolist.urls'))
 ]
 
 # TODO: Implement Routings Here
