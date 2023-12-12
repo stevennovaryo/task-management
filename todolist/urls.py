@@ -1,6 +1,6 @@
 from django.urls import path
 from todolist.views import show_todolist, register, login_user, logout_user
-from todolist.views import create_task, add_task, finish_task, unfinish_task, delete_task, delete_task_ajax, show_task, get_task_json, amogus, test, show_boardlist, add_board, get_board_json, show_board
+from todolist.views import create_task, add_task, finish_task, unfinish_task, delete_task, delete_task_ajax, show_task, get_task_json, amogus, test, show_boardlist, add_board, get_board_json, show_board, invite_user
 
 app_name = 'todolist'
 
@@ -23,4 +23,5 @@ urlpatterns = [
     path('json-board/', get_board_json, name='get_board_json'),
     path('amogus/', amogus, name='amogus'),
     path('test/<str:message>', test, name='test'),
+    path('invite/', invite_user, name='invite_user'),
 ]

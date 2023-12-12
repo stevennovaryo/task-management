@@ -11,7 +11,8 @@ import datetime
 from django.urls import reverse
 from urllib3 import HTTPResponse
 from .models import Task, Board
-from .forms import TaskForm, BoardForm
+from .forms import TaskForm, BoardForm, InviteUserForm
+from django.contrib.auth.models import User
 
 @login_required(login_url='/todolist/login/')
 def show_todolist(request):
@@ -64,8 +65,8 @@ def finish_task(request, task_id):
         task.save()
     else:
         return redirect(reverse('todolist:amogus'))
-
-    return redirect(reverse('todolist:show_boardlist'))
+    board_id = request.GET.get('board_id')
+    return redirect(reverse('todolist:show_board', kwargs={'board_id': board_id}))
 
 @login_required(login_url='/todolist/login/')
 def unfinish_task(request, task_id):
@@ -77,7 +78,8 @@ def unfinish_task(request, task_id):
     else:
         return redirect(reverse('todolist:amogus'))
 
-    return redirect(reverse('todolist:show_boardlist'))
+    board_id = request.GET.get('board_id')
+    return redirect(reverse('todolist:show_board', kwargs={'board_id': board_id}))
 
 @login_required(login_url='/todolist/login/')
 def delete_task(request, task_id):
@@ -88,7 +90,8 @@ def delete_task(request, task_id):
     else:
         return redirect(reverse('todolist:amogus'))
 
-    return redirect(reverse('todolist:show_boardlist'))
+    board_id = request.GET.get('board_id')
+    return redirect(reverse('todolist:show_board', kwargs={'board_id': board_id}))
 
 @login_required(login_url='/todolist/login/')
 def delete_task_ajax(request, task_id):
@@ -149,9 +152,8 @@ def get_board_json(request):
 def show_board(request, board_id):
     board = Board.objects.get(pk=board_id)
 
-    #TODO: Check if user allowed to view board
-    # if not board.allowed_users.filter(user=request.user).exists():
-    #     return redirect(reverse('todolist:amogus'))
+    if not board.allowed_users.filter(id=request.user.id).exists():
+        return redirect(reverse('todolist:amogus'))
 
     task_list = Task.objects.filter(board=board)
 
@@ -162,6 +164,26 @@ def show_board(request, board_id):
     }
 
     return render(request, 'todolist.html', context)
+
+@login_required(login_url='/todolist/login/')
+def invite_user(request):
+    if request.method != 'POST':
+        return redirect('todolist:amogus')
+    
+    form = InviteUserForm(request.POST)
+    if form.is_valid():
+        try:
+            invited_username = form.cleaned_data["invited_username"]
+            invited_user = User.objects.get(username=invited_username)
+            
+            board_id = request.POST.get('board_id')
+            board = Board.objects.get(pk=board_id)
+            board.allowed_users.add(invited_user)
+        except:
+            print('User not found')
+            pass
+        
+    return redirect(reverse('todolist:show_board', kwargs={'board_id': 1}))
 
 def register(request):
     form = UserCreationForm()

@@ -15,16 +15,32 @@
             event.preventDefault();
 
             var actionurl = event.currentTarget.action;
-            console.log($("form#modal-form").serialize())
             $.ajax({
                     url: actionurl,
                     type: 'post',
                     dataType: 'json',
-                    data: $("form#modal-form").serialize() + "&board_id=1",
+                    data: $("form#modal-form").serialize() + "&board_id={{board.id}}",
                     success: function(data) {
                         data.forEach(element => {
                             $("#todolist-card-list").append(createTasKCard(element));
                         });
+                    },
+                    error: function(){
+                        alert("ERROR");
+                    }
+            });
+        });
+
+        $( "form#modal-form-invite" ).submit(function( event ) {
+            // alert( "Handler for .submit() called." );
+            event.preventDefault();
+            console.log($("form#modal-form-invite").serialize())
+            var actionurl = event.currentTarget.action;
+            $.ajax({
+                    url: actionurl,
+                    type: 'post',
+                    data: $("form#modal-form-invite").serialize() + "&board_id={{board.id}}",
+                    success: function(data) {
                     },
                     error: function(){
                         alert("ERROR");
@@ -55,18 +71,18 @@
             .append($('<h4 class="card-title"></h4>')
                 .append(data.title)
                 .append($('<span></span>')
-                    .addClass('badge rounded-pill')
+                    .addClass('badge rounded-pill mx-2')
                     .addClass(data.is_finished ? 'bg-success' : 'bg-danger')
                     .text(data.is_finished ? 'Finished' : 'Not Finished')))
             .append($('<h6 class="card-subtitle mb-2 text-muted">Created on: ' + data.date + '</h6>'))
             .append($('<p class="card-text">' + data.description + '</p>'))
             .append($('<a class="btn btn-secondary" href="../show-task/' + element.pk + '">Show task</a>'))
             .append($('<a class="btn btn-primary">Change status</a>')
-                .attr('href', (data.is_finished ? '../unfinish-task/' : '../finish-task/') + element.pk))
-            .append($('<a class="btn btn-danger" href="#">Delete task</a>')
+                .attr('href', (data.is_finished ? '../unfinish-task/' : '../finish-task/') + element.pk + "?board_id={{board.id}}"))
+            .append($('<a class="btn btn-danger" href="">Delete task</a>')
                 .click(() => {
                     $.ajax({
-                        url: '../delete/' + element.pk,
+                        url: '../delete/' + element.pk + "?board_id={{board.id}}",
                         type: 'delete',
                         beforeSend: function(xhr) {
                             xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
@@ -97,6 +113,8 @@
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Task</button>
 
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropUser">Invite User</button>
+
     <div id="todolist-card-list" class="todolist-card-list">
     </div>
 </div>
@@ -119,6 +137,33 @@
                     <textarea name="description" placeholder="Description" cols="40" rows="10" required="" id="id_description" class="form-control"></textarea>
         
                     <input class="btn btn-primary mt-3" style="width: 100%;" type="submit" name="submit" value="Create" data-bs-dismiss="modal"/>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdropUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Invite User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="../invite/" class="form-create-task" id="modal-form-invite">
+                    {% csrf_token %}
+                    <!-- <label for="id_title">Title:</label> -->
+                    <input id="invited_username" type="text" name="invited_username" maxlength="150" required class="form-control" placeholder="Username">
+                    <!-- <input type="text" name="title" placeholder="Title" maxlength="128" required="" id="id_title" class="form-control"> -->
+        
+                    <!-- <label for="id_description">Description:</label> -->
+                    <!-- <textarea name="description" placeholder="Description" cols="40" rows="10" required="" id="id_description" class="form-control"></textarea> -->
+        
+                    <input class="btn btn-primary mt-3" style="width: 100%;" type="submit" name="submit" value="Invite" data-bs-dismiss="modal"/>
                 </form>
             </div>
             <div class="modal-footer">
