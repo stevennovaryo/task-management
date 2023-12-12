@@ -2,7 +2,7 @@
 
 {% block navbar %}
 <div class="container-fluid">
-    <a class="navbar-brand text-white" href="{% url 'todolist:show_boardlist' %}">Board List</a>
+    <a class="navbar-brand text-white" href="{% url 'todolist:show_boardlist' %}">Tasks List</a>
     <a class="btn btn-danger" href="{% url 'todolist:logout' %}">Logout</a>
 </div>
 {% endblock navbar %}
@@ -41,9 +41,10 @@
                     type: 'post',
                     data: $("form#modal-form-invite").serialize() + "&board_id={{board.id}}",
                     success: function(data) {
+                        alert(data['success'] ? "User Invited" : "User Not Found");
                     },
                     error: function(){
-                        alert("ERROR");
+                        alert("Error");
                     }
             });
         });
